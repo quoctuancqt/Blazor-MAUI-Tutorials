@@ -1,0 +1,1 @@
+﻿This tutorial can be reached at [Blazor University](https://blazor-university.com/)

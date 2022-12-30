@@ -1,0 +1,65 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<DataList Data=@People>
+    <ItemTemplate Context="person">
+        <li @key=person>@person.Salutation @person.GivenName @person.FamilyName</li>
+    </ItemTemplate>
+</DataList>
+
+<DataList Data=@People>
+    <ListTemplate Context="listOfPeople">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Salutation</th>
+                    <th scope="col">Given name</th>
+                    <th scope="col">Family name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @listOfPeople
+            </tbody>
+        </table>
+    </ListTemplate>
+    <ItemTemplate Context="person">
+        <tr @key=@person>
+            <td>@person.Salutation</td>
+            <td>@person.GivenName</td>
+            <td>@person.FamilyName</td>
+        </tr>
+    </ItemTemplate>
+</DataList>
+
+<EditForm Model=@Person>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <InputText @bind-Value=Person.Name class="form-control" id="Name" />
+        <ValidationMessage For="() => Person.Name" />
+    </div>
+    <div class="form-group">
+        <label for="Age">Age</label>
+        <InputNumber @bind-Value=Person.Age class="form-control" id="Age" />
+        <ValidationMessage For="() => Person.Age" />
+    </div>
+    <input type="submit" class="btn btn-primary" value="Save" />
+</EditForm>
+
+@code
+{
+    Person Person = new Person();
+    private IEnumerable<Person> People;
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        People = new Person[]
+        {
+          new Person { Salutation = "Mr", GivenName = "Bob", FamilyName = "Geldof" },
+          new Person { Salutation = "Mrs", GivenName = "Angela", FamilyName = "Rippon" },
+          new Person { Salutation = "Mr", GivenName = "Freddie", FamilyName = "Mercury" }
+        };
+    }
+}

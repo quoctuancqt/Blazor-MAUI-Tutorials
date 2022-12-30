@@ -1,0 +1,137 @@
+﻿@page "/counter"
+@page "/counter/{CurrentCount:int}"
+@implements IDisposable
+@inject NavigationManager NavigationManager
+
+<PageTitle>Counter</PageTitle>
+
+<h1 class="mt-3 mb-3">Counter</h1>
+
+<p role="status">Current count: @CurrentCount</p>
+
+<div class="form-check">
+    <input @bind=@forceLoad type="checkbox" class="form-check-input" id="ForceLoadCheckbox" />
+    <label class="form-check-label" for="ForceLoadCheckbox">Force page reload on navigate</label>
+</div>
+
+<div class="btn-group" role="group">
+    <button @onclick=@( () => AlterBy(-1) ) class="btn btn-primary">-</button>
+    <input value=@CurrentCount readonly class="form-control" />
+    <button @onclick=@( () => AlterBy(1) ) class="btn btn-primary">+</button>
+</div>
+<a class="btn btn-secondary" href="/Counter/0">Reset</a>
+<p>
+    <em>Page redirects to ibm.com when count hits 10!</em>
+</p>
+
+<hr />
+
+<h2 class="mt-3 mb-3">Two-way binding</h2>
+
+<MyFirstComponent @bind-CurrentCounterValue=CurrentCount />
+
+<hr />
+
+<h2 class="mt-3 mb-3">Cascading by name</h2>
+
+<p>Toggle the options</p>
+<input @bind-value=FirstOptionValue type="checkbox" /> First option
+<br />
+<input @bind-value=SecondOptionValue type="checkbox" /> Second option
+<br />
+
+<CascadingValue Name="FirstOption" Value=@FirstOptionValue>
+    <CascadingValue Name="SecondOption" Value=@SecondOptionValue>
+        <FirstLevelComponent />
+    </CascadingValue>
+</CascadingValue>
+
+<hr />
+
+<h2 class="mt-3 mb-3">Cascading</h2>
+
+<CascadingValue Name="CascadedValue" Value=@CascadedValue>
+    <CascadingValue Name="ValueToOverride" Value=@OuterValue>
+
+        <h2>First level</h2>
+        <CascadingComponent />
+
+        <CascadingValue Name="ValueToOverride" Value=@InnerValue>
+            <h2>Second level</h2>
+            <CascadingComponent />
+        </CascadingValue>
+
+        <h2>Back to first level</h2>
+        <CascadingComponent />
+
+    </CascadingValue>
+</CascadingValue>
+
+<hr />
+
+<h2 class="mt-3 mb-3">Render Fragment</h2>
+
+<CollapsibleComponent>
+    <p>Hello world!</p>
+</CollapsibleComponent>
+
+<hr />
+
+<h2 class="mt-3 mb-3">Tab Control</h2>
+
+<TabControl>
+    <TabTextTemplate>
+        <img src="/icon-192.png" width="20" /> @context.Text
+    </TabTextTemplate>
+    <ChildContent>
+        <TabPage Text="Tab 1">
+            <h1>The first tab</h1>
+        </TabPage>
+        <TabPage Text="Tab 2">
+            <h1>The second tab</h1>
+        </TabPage>
+        <TabPage Text="Tab 3">
+            <h1>The third tab</h1>
+        </TabPage>
+    </ChildContent>
+</TabControl>
+
+@code {
+    [Parameter]
+    public int CurrentCount { get; set; }
+    bool forceLoad;
+    bool FirstOptionValue;
+    bool SecondOptionValue;
+    string CascadedValue = "CascadedValue";
+    string OuterValue = "Outer value";
+    string InnerValue = "Inner value";
+
+    void AlterBy(int adjustment)
+    {
+        int newCount = CurrentCount + adjustment;
+
+        if (newCount >= 10)
+            NavigationManager.NavigateTo("https://ibm.com");
+
+        NavigationManager.NavigateTo("/counter/" + newCount, forceLoad);
+    }
+
+    protected override void OnInitialized()
+    {
+        // Subscribe to the event
+        NavigationManager.LocationChanged += LocationChanged;
+        base.OnInitialized();
+    }
+
+    private void LocationChanged(object sender, LocationChangedEventArgs e)
+    {
+        string navigationMethod = e.IsNavigationIntercepted ? "HTML" : "code";
+        System.Diagnostics.Debug.WriteLine($"Notified of navigation via {navigationMethod} to {e.Location}");
+    }
+
+    void IDisposable.Dispose()
+    {
+        // Unsubscribe from the event when our component is disposed
+        NavigationManager.LocationChanged -= LocationChanged;
+    }
+}

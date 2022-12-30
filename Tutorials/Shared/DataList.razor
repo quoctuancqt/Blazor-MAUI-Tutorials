@@ -1,0 +1,60 @@
+﻿@typeparam TItem
+
+@if (ListTemplate == null)
+{
+    <ul>
+
+        @foreach (TItem item in Data ?? Array.Empty<TItem>())
+        {
+            @ItemTemplate(item)
+        }
+
+    </ul>
+}
+else
+{
+    @ListTemplate(
+    @:@{
+      foreach (TItem item in Data ?? Array.Empty<TItem>())
+      {
+        @ItemTemplate(item)
+      }
+    }
+  )
+}
+
+@code
+{
+    [Parameter]
+    public IEnumerable<TItem> Data { get; set; }
+
+    [Parameter]
+    public RenderFragment<TItem> ItemTemplate { get; set; }
+
+    [Parameter]
+    public RenderFragment<RenderFragment> ListTemplate { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (ItemTemplate == null)
+        {
+            ItemTemplate = (item) => @:@{
+        <li @key=item>@System.Text.Json.JsonSerializer.Serialize(item)</li>
+    }
+          ;
+        }
+
+        if (ListTemplate == null)
+        {
+            ListTemplate = _ => @:@{
+        <ul>
+            @foreach (TItem item in Data)
+            {
+                @ItemTemplate(item)
+            }
+        </ul>
+    }
+    ;
+        }
+    }
+}
