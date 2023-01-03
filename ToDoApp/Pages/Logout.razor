@@ -1,0 +1,20 @@
+﻿@page "/logout"
+@using ToDoApp.Services;
+
+@code
+{
+    [Inject]
+    private IAuthService AuthenticationService { get; set; }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    [Inject]
+    IJSRuntime JSRuntime { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await AuthenticationService.Logout();
+        NavigationManager.NavigateTo("/");
+    }
+}
