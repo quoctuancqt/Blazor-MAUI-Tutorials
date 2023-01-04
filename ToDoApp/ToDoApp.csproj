@@ -7,6 +7,61 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Components\**" />
+    <Compile Remove="Helpers\**" />
+    <Compile Remove="Models\**" />
+    <Compile Remove="Pages\**" />
+    <Compile Remove="Providers\**" />
+    <Compile Remove="Services\**" />
+    <Compile Remove="Shared\**" />
+    <Compile Remove="wwwroot\css\**" />
+    <Compile Remove="wwwroot\img\**" />
+    <Compile Remove="wwwroot\js\**" />
+    <Compile Remove="wwwroot\scss\**" />
+    <Compile Remove="wwwroot\vendor\**" />
+    <Content Remove="Components\**" />
+    <Content Remove="Helpers\**" />
+    <Content Remove="Models\**" />
+    <Content Remove="Pages\**" />
+    <Content Remove="Providers\**" />
+    <Content Remove="Services\**" />
+    <Content Remove="Shared\**" />
+    <Content Remove="wwwroot\css\**" />
+    <Content Remove="wwwroot\img\**" />
+    <Content Remove="wwwroot\js\**" />
+    <Content Remove="wwwroot\scss\**" />
+    <Content Remove="wwwroot\vendor\**" />
+    <EmbeddedResource Remove="Components\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="Pages\**" />
+    <EmbeddedResource Remove="Providers\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <EmbeddedResource Remove="Shared\**" />
+    <EmbeddedResource Remove="wwwroot\css\**" />
+    <EmbeddedResource Remove="wwwroot\img\**" />
+    <EmbeddedResource Remove="wwwroot\js\**" />
+    <EmbeddedResource Remove="wwwroot\scss\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\**" />
+    <None Remove="Components\**" />
+    <None Remove="Helpers\**" />
+    <None Remove="Models\**" />
+    <None Remove="Pages\**" />
+    <None Remove="Providers\**" />
+    <None Remove="Services\**" />
+    <None Remove="Shared\**" />
+    <None Remove="wwwroot\css\**" />
+    <None Remove="wwwroot\img\**" />
+    <None Remove="wwwroot\js\**" />
+    <None Remove="wwwroot\scss\**" />
+    <None Remove="wwwroot\vendor\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="CustomAuthStateProvider.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="7.0.1" />
@@ -32,6 +87,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
 </Project>
