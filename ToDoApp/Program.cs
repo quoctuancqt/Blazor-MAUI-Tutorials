@@ -1,6 +1,6 @@
 using Blazored.LocalStorage;
 using Common;
-using Common.Providers;
+using Common.Extensions;
 using Common.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -12,10 +12,7 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 var services = builder.Services;
 
-services.AddHttpClient<BmsApiClient>(configs =>
-{
-    configs.BaseAddress = new Uri("http://sss-iot-api.azurewebsites.net/");
-});
+services.AddBmsApiClient("http://sss-iot-api.azurewebsites.net/");
 
 RegisterCustomServices(services);
 

@@ -1,6 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Common;
-using Common.Providers;
+using Common.Extensions;
 using Common.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Logging;
@@ -25,10 +25,7 @@ namespace ToDoMobile
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
 #endif
-            builder.Services.AddHttpClient<BmsApiClient>(configs =>
-            {
-                configs.BaseAddress = new Uri("http://sss-iot-api.azurewebsites.net/");
-            });
+            builder.Services.AddBmsApiClient("http://sss-iot-api.azurewebsites.net/");
 
             RegisterCustomServices(builder.Services);
 
