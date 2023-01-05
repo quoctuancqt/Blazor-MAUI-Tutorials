@@ -35,15 +35,22 @@
         SpinnerService.OnHide += HideSpinner;
     }
 
-    public void ShowSpinner()
+    public async void ShowSpinner()
     {
-        IsVisible = true;
-        StateHasChanged();
+        await InvokeAsync(() =>
+        {
+            IsVisible = true;
+            StateHasChanged();
+        });
+
     }
 
-    public void HideSpinner()
+    public async void HideSpinner()
     {
-        IsVisible = false;
-        StateHasChanged();
+        await InvokeAsync(() =>
+        {
+            IsVisible = false;
+            StateHasChanged();
+        });
     }
 }
