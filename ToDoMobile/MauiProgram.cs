@@ -1,8 +1,4 @@
-﻿using Blazored.LocalStorage;
-using Common;
-using Common.Extensions;
-using Common.Services;
-using Microsoft.AspNetCore.Components.Authorization;
+﻿using Common.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace ToDoMobile
@@ -27,19 +23,9 @@ namespace ToDoMobile
 #endif
             builder.Services.AddBmsApiClient("http://sss-iot-api.azurewebsites.net/");
 
-            RegisterCustomServices(builder.Services);
+            builder.Services.AddCoreServices();
 
             return builder.Build();
-        }
-
-        private static void RegisterCustomServices(IServiceCollection services)
-        {
-            services.AddOptions();
-            services.AddBlazoredLocalStorage();
-            services.AddAuthorizationCore();
-            services.AddScoped<CustomAuthStateProvider>();
-            services.AddScoped<AuthenticationStateProvider>(s => s.GetRequiredService<CustomAuthStateProvider>());
-            services.AddScoped<IAuthService, AuthService>();
         }
     }
 }

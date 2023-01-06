@@ -44,8 +44,6 @@ namespace Common.Services
 
             ((CustomAuthStateProvider)_authStateProvider).NotifyUserAuthentication(loginRequest.Email);
 
-            _httpClient.SetAuthorizationHeader(resp.Data.AccessToken);
-
             return resp.Data;
         }
 
@@ -53,7 +51,6 @@ namespace Common.Services
         {
             await _localStorage.RemoveItemAsync("access_token");
             ((CustomAuthStateProvider)_authStateProvider).NotifyUserLogout();
-            _httpClient.SetAuthorizationHeader(null);
         }
 
         public Task Register(RegisterRequest registerRequest)
