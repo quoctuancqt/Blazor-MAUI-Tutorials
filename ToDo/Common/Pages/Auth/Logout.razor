@@ -1,5 +1,4 @@
 ﻿@page "/logout"
-@attribute [Authorize]
 
 @code
 {
@@ -15,6 +14,6 @@
     protected override async Task OnInitializedAsync()
     {
         await AuthenticationService.Logout();
-        NavigationManager.NavigateTo("/");
+        NavigationManager.NavigateTo("/login");
     }
 }
