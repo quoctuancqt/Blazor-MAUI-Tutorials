@@ -1,4 +1,5 @@
-﻿using ToDoShared.Models.Enums;
+﻿using System;
+using ToDoShared.Models.Enums;
 
 namespace ToDoShared.Models.Common
 {

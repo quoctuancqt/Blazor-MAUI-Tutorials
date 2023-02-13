@@ -55,10 +55,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ToDoShared\ToDoShared.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Update="MainPage.xaml.cs">
         <DependentUpon>MainPage.xaml</DependentUpon>
       </Compile>

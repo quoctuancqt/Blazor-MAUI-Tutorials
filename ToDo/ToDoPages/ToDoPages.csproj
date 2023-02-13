@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoComponents\ToDoComponents.csproj" />
+    <ProjectReference Include="..\ToDoShared\ToDoShared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="7.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>

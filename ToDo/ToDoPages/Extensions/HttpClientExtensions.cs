@@ -1,0 +1,35 @@
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
+using System.Web;
+using ToDoComponents.Loading;
+using ToDoShared.Providers;
+
+namespace ToDoShared.Extensions
+{
+    public static class HttpClientExtensions
+    {
+        public static IServiceCollection AddApiClient(this IServiceCollection services, string url)
+        {
+            services.AddSingleton<SpinnerService>();
+
+            services.AddScoped<LoadingInterceptorHandler>();
+
+            services.AddHttpClient<ApiClient>(configs =>
+            {
+                configs.BaseAddress = new Uri(url);
+            }).AddHttpMessageHandler<LoadingInterceptorHandler>();
+
+            return services;
+        }
+
+        public static string GetQueryString(this object obj)
+        {
+            var properties = from p in obj.GetType().GetProperties()
+                             where p.GetValue(obj, null) != null && !p.GetValue(obj, null).GetType().Equals(typeof(string[]))
+                             select p.Name + "=" + HttpUtility.UrlEncode(p.GetValue(obj, null).ToString());
+
+            return string.Join("&", properties.ToArray());
+        }
+    }
+}
