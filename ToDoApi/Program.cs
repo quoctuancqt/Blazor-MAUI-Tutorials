@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
+using ToDoApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,15 +52,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
                 // it's recommended to check the type header to avoid "JWT confusion" attacks
                 options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
-            });
-// reference tokens
-//.AddOAuth2Introspection("introspection", options =>
-//{
-//    options.Authority = Constants.Authority;
 
-//    options.ClientId = "resource1";
-//    options.ClientSecret = "secret";
-//});
+                // if token does not contain a dot, it is a reference token
+                options.ForwardDefaultSelector = Selector.ForwardReferenceToken("introspection");
+            })
+            // reference tokens
+            .AddOAuth2Introspection("introspection", options =>
+            {
+                options.Authority = "https://demo.duendesoftware.com";
+
+                options.ClientId = "interactive.confidential";
+                options.ClientSecret = "secret";
+            });
 
 builder.Services.AddAuthorization();
 
@@ -71,7 +75,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        options.OAuthClientId("interactive.public");
+        options.OAuthClientId("interactive.confidential");
+        options.OAuthClientSecret("secret");
         options.OAuthScopes("profile", "openid", "api", "email", "offline_access");
         options.OAuthUsePkce();
     });
