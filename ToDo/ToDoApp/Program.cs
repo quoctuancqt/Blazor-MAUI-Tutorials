@@ -10,7 +10,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 var services = builder.Services;
 services.AddOidcAuthentication(options =>
 {
-    builder.Configuration.Bind("Local", options.ProviderOptions);
+    builder.Configuration.Bind("oidc", options.ProviderOptions);
 });
 
 services.AddApiClient("http://localhost:5000/");

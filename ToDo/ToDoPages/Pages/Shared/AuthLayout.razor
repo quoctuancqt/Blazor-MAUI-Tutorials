@@ -1,6 +1,10 @@
 ﻿@inherits LayoutComponentBase
-@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.Extensions.Options
+
 @inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
+@inject IOptionsSnapshot<RemoteAuthenticationOptions<ApiAuthorizationProviderOptions>> Options
 
 <Loading></Loading>
 
@@ -65,6 +69,8 @@
     {
         await JSRuntime.InvokeVoidAsync("closeModal", "#logoutModal");
 
-        NavigationManager.NavigateTo("/authentication/logout");
+        Navigation.NavigateToLogout(Options.Get(
+            Microsoft.Extensions.Options.Options.DefaultName)
+            .AuthenticationPaths.LogOutCallbackPath);
     }
 }

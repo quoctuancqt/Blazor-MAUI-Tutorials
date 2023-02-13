@@ -59,7 +59,8 @@ public static class Config
                 AllowedScopes =
                 {
                     IdentityServerConstants.StandardScopes.OpenId,
-                    IdentityServerConstants.StandardScopes.Profile
+                    IdentityServerConstants.StandardScopes.Profile,
+                    "scope1"
                 },
                 RedirectUris = { "https://localhost:5000/authentication/login-callback" },
                 PostLogoutRedirectUris = { "https://localhost:5000/authentication/logout-callback" }
