@@ -1,10 +1,19 @@
 ﻿@page "/authentication/{action}"
+@using Microsoft.AspNetCore.Authorization;
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @attribute [AllowAnonymous]
 
-<RemoteAuthenticatorView Action="@Action" />
+<RemoteAuthenticatorView Action="@Action" OnLogOutSucceeded="OnLogOutSucceeded"/>
 
 @code {
     [Parameter]
     public string Action { get; set; }
+
+    [Inject]
+    private NavigationManager Navigation { get; set; }
+
+    private void OnLogOutSucceeded()
+    {
+        Navigation.NavigateTo("/");
+    }
 }
